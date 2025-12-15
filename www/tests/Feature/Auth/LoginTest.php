@@ -17,9 +17,9 @@ class LoginTest extends TestCase
     public function testCredencialesCorrectas()
     {
         $usuario = Persona::create([
-            'Nombre' => 'Usuario Test',
-            'Mail' => 'test@ejemplo.com',
-            'password' => Hash::make('password123'),
+            'Nombre' => 'Claudia',
+            'Mail' => 'clau@gmail.com',
+            'password' => Hash::make('Claudia123'),
             'Estado' => 'Activo',
             'SecretKey' => null,
             'remember_token' => null,
@@ -27,7 +27,7 @@ class LoginTest extends TestCase
         
         //Intentar login
         $response = $this->post('/login', [
-            'Mail' => 'test@ejemplo.com',
+            'Mail' => 'claum@gmail.com',
             'password' => 'password123',
         ]);
         
@@ -45,8 +45,8 @@ class LoginTest extends TestCase
     {
         // 1. Crear usuario
         Persona::create([
-            'Nombre' => 'Usuario Test',
-            'Mail' => 'test@ejemplo.com',
+            'Nombre' => 'Claudiamar',
+            'Mail' => 'claudiamar@gmail.com',
             'password' => Hash::make('password123'),
             'Estado' => 'Activo',
             'SecretKey' => null,
@@ -54,8 +54,8 @@ class LoginTest extends TestCase
         
         // 2. Intentar login con password incorrecto
         $response = $this->post('/login', [
-            'Mail' => 'test@ejemplo.com',
-            'password' => 'password321',
+            'Mail' => 'claudiamar@gmail.com',
+            'password' => 'password123',
         ]);
         
         // 3. Verificar error
