@@ -203,15 +203,16 @@ services:
       - traefik.http.middlewares.n8n.headers.STSIncludeSubdomains=true
       - traefik.http.middlewares.n8n.headers.STSPreload=true
       - traefik.http.routers.n8n.middlewares=n8n@docker
+      - traefik.http.services.n8n.loadbalancer.server.port=5678 
     environment:
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_HOST=ssteam.ddns.net
       - N8N_PORT=5678
-      - N8N_PROTOCOL=http
+      - N8N_PROTOCOL=https
       - N8N_RUNNERS_ENABLED=true
       - NODE_ENV=production
       - N8N_SECURE_COOKIE=false
-      - WEBHOOK_URL=http://ssteam.ddns.net:5678/
+      - WEBHOOK_URL=https://ssteam.ddns.net/
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
       - TZ=${GENERIC_TIMEZONE}
     volumes:
