@@ -27,7 +27,7 @@ class LoginTest extends TestCase
         
         //Intentar login
         $response = $this->post('/login', [
-            'Mail' => 'test1@ejemplo.com',
+            'Mail' => 'test@ejemplo.com',
             'password' => 'password123',
         ]);
         
