@@ -77,48 +77,48 @@ services:
       bash -lc "mysql -h db -uroot -proot < /app_user.sql"
     restart: "no"
 
-  proxysql:
-    image: proxysql/proxysql:2.5.5
-    container_name: proxysql
-    ports:
-      - "6033:6033"
-      - "6032:6032"
-    volumes:
-      - /home/ssteam/proxysql:/var/lib/proxysql
-      - ./infra/proxysql_bootstrap.sql:/bootstrap.sql:ro
-    depends_on:
-      db:
-        condition: service_healthy
-      slave:
-        condition: service_healthy
-      db-init:
-        condition: service_completed_successfully
-    networks:
-      - shocking-sales-network
+ # proxysql:
+ #   image: proxysql/proxysql:2.5.5
+ #   container_name: proxysql
+ #   ports:
+ #     - "6033:6033"
+ #     - "6032:6032"
+ #   volumes:
+ #     - /home/ssteam/proxysql:/var/lib/proxysql
+ #     - ./infra/proxysql_bootstrap.sql:/bootstrap.sql:ro
+ #   depends_on:
+ #     db:
+ #       condition: service_healthy
+ #     slave:
+ #       condition: service_healthy
+ #     db-init:
+ #       condition: service_completed_successfully
+ #   networks:
+ #     - shocking-sales-network
     #  - reddecontenedores
-    restart: always
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "mysql -h 127.0.0.1 -P 6033 -u userSS -ppass -e 'SELECT 1' >/dev/null 2>&1",
-        ]
-      interval: 5s
-      timeout: 5s
-      retries: 30
-      start_period: 30s
-    command: >
-      bash -lc "
-        rm -f /var/lib/proxysql/proxysql.db || true
-        proxysql -f --idle-threads &
-        for i in {1..60}; do
-          mysql -h 127.0.0.1 -P 6032 -u admin -padmin -e 'SELECT 1' >/dev/null 2>&1 && break
-          sleep 1
-        done
-        mysql -h 127.0.0.1 -P 6032 -u admin -padmin < /bootstrap.sql
-        sleep 5
-        wait -n
-      "
+ #   restart: always
+ #   healthcheck:
+ #     test:
+ #       [
+ #         "CMD-SHELL",
+ #         "mysql -h 127.0.0.1 -P 6033 -u userSS -ppass -e 'SELECT 1' >/dev/null 2>&1",
+ #       ]
+ #     interval: 5s
+ #     timeout: 5s
+ #     retries: 30
+ #     start_period: 30s
+ #   command: >
+ #     bash -lc "
+ #       rm -f /var/lib/proxysql/proxysql.db || true
+ #       proxysql -f --idle-threads &
+ #       for i in {1..60}; do
+ #         mysql -h 127.0.0.1 -P 6032 -u admin -padmin -e 'SELECT 1' >/dev/null 2>&1 && break
+ #         sleep 1
+ #       done
+ #       mysql -h 127.0.0.1 -P 6032 -u admin -padmin < /bootstrap.sql
+ #       sleep 5
+ #       wait -n
+ #     "
 
   web:
     build: .
@@ -128,8 +128,8 @@ services:
     volumes:
       - ./www:/var/www/html
     depends_on:
-      proxysql:
-        condition: service_healthy
+      #proxysql:
+        #condition: service_healthy
       db:
         condition: service_healthy
     command: >
