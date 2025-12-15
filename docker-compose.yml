@@ -205,13 +205,13 @@ services:
       - traefik.http.routers.n8n.middlewares=n8n@docker
     environment:
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
-      - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
+      - N8N_HOST=ssteam.ddns.net
       - N8N_PORT=5678
       - N8N_PROTOCOL=http
       - N8N_RUNNERS_ENABLED=true
       - NODE_ENV=production
       - N8N_SECURE_COOKIE=false
-      - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
+      - WEBHOOK_URL=http://ssteam.ddns.net:5678/
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
       - TZ=${GENERIC_TIMEZONE}
     volumes:
