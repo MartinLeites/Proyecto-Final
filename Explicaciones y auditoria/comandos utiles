@@ -1,0 +1,1 @@
+php artisan optimize:clear - limpiar cache de laravel

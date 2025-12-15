@@ -1,0 +1,16 @@
+COMANDOS PARA HACER FUNCIONAR LA REPLICACION
+1) crear un usuario para la replicacion en el bash del contenedor "db"
+CREATE USER 'replicador'@'%' IDENTIFIED BY 'contrarepli';
+GRANT REPLICATION SLAVE ON *.* TO 'replicador'@'%';
+
+FLUSH PRIVILEGES;
+
+2) poner los siguientes comandos en el bash del contenedor "slave"
+CHANGE REPLICATION SOURCE TO
+SOURCE_HOST='db',
+SOURCE_USER='replicador',
+SOURCE_PASSWORD='contrarepli',
+SOURCE_AUTO_POSITION=1,
+SOURCE_SSL=1;
+
+START REPLICA;

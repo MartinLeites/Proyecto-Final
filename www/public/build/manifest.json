@@ -1,0 +1,124 @@
+{
+  "resources/css/2fa.css": {
+    "file": "assets/2fa-BwuZZIiV.css",
+    "src": "resources/css/2fa.css",
+    "isEntry": true,
+    "names": [
+      "2fa.css"
+    ]
+  },
+  "resources/css/adminStyle.css": {
+    "file": "assets/adminStyle-BlNxaokA.css",
+    "src": "resources/css/adminStyle.css",
+    "isEntry": true,
+    "names": [
+      "adminStyle.css"
+    ]
+  },
+  "resources/css/barra.css": {
+    "file": "assets/barra-DjYqfSTK.css",
+    "src": "resources/css/barra.css",
+    "isEntry": true,
+    "names": [
+      "barra.css"
+    ]
+  },
+  "resources/css/editar.css": {
+    "file": "assets/editar-by1vkOLw.css",
+    "src": "resources/css/editar.css",
+    "isEntry": true,
+    "names": [
+      "editar.css"
+    ]
+  },
+  "resources/css/layout.css": {
+    "file": "assets/layout-ClX4M1Z8.css",
+    "src": "resources/css/layout.css",
+    "isEntry": true,
+    "names": [
+      "layout.css"
+    ]
+  },
+  "resources/css/login.css": {
+    "file": "assets/login-CQO3wP-h.css",
+    "src": "resources/css/login.css",
+    "isEntry": true,
+    "names": [
+      "login.css"
+    ]
+  },
+  "resources/css/panel.css": {
+    "file": "assets/panel-BODkK1iz.css",
+    "src": "resources/css/panel.css",
+    "isEntry": true,
+    "names": [
+      "panel.css"
+    ]
+  },
+  "resources/css/perfil.css": {
+    "file": "assets/perfil-CxSAb81Z.css",
+    "src": "resources/css/perfil.css",
+    "isEntry": true,
+    "names": [
+      "perfil.css"
+    ]
+  },
+  "resources/css/personas.css": {
+    "file": "assets/personas-BTwAQix2.css",
+    "src": "resources/css/personas.css",
+    "isEntry": true,
+    "names": [
+      "personas.css"
+    ]
+  },
+  "resources/css/plantilla.css": {
+    "file": "assets/plantilla-YnFLekcH.css",
+    "src": "resources/css/plantilla.css",
+    "isEntry": true,
+    "names": [
+      "plantilla.css"
+    ]
+  },
+  "resources/css/registroAdmin.css": {
+    "file": "assets/registroAdmin-CnYy6fYK.css",
+    "src": "resources/css/registroAdmin.css",
+    "isEntry": true,
+    "names": [
+      "registroAdmin.css"
+    ]
+  },
+  "resources/css/registroUsuario.css": {
+    "file": "assets/registroUsuario-DSJYHTEk.css",
+    "src": "resources/css/registroUsuario.css",
+    "isEntry": true,
+    "names": [
+      "registroUsuario.css"
+    ]
+  },
+  "resources/css/resultados.css": {
+    "file": "assets/resultados-DifuYWvS.css",
+    "src": "resources/css/resultados.css",
+    "isEntry": true,
+    "names": [
+      "resultados.css"
+    ]
+  },
+  "resources/js/mensaje.js": {
+    "file": "assets/mensaje-ByHv0Xs9.js",
+    "name": "mensaje",
+    "src": "resources/js/mensaje.js",
+    "isEntry": true
+  },
+  "resources/js/user-menu.js": {
+    "file": "assets/user-menu-CQ4S32Xm.js",
+    "name": "user-menu",
+    "src": "resources/js/user-menu.js",
+    "isEntry": true
+  },
+  "resources/js/vistaContra.js": {
+    "file": "assets/vistaContra-DA5CwsBA.js",
+    "name": "vistaContra",
+    "src": "resources/js/vistaContra.js",
+    "isEntry": true
+  }
+}

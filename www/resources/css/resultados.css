@@ -1,0 +1,60 @@
+
+.producto {
+    display: flex; /* Activa Flexbox */
+    align-items: flex-start; /* Alinea arriba */
+    gap: 20px; /* Espacio entre imagen y texto */
+    background-color: #dbe3e9;
+}
+
+/* Ajusta la imagen */
+.imagen-Producto {
+  margin-left: 200px;
+    width: 800px; /* Ajustá el tamaño que quieras */
+    height: auto;
+}
+
+#nombreProducto{
+  font-size: 50px;
+}
+
+/* Info del producto */
+.info-Producto {
+    max-width: 600px;
+      font-size: 27px;
+    margin-left: 10px;
+}
+
+.seccion_comparacion {
+    font-size: 19px;
+    padding: 5px;
+    width: 750px;
+}
+
+.tabla_tiendas_producto {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.tabla_tiendas_producto thead {
+    background-color: #f56033;
+    color: #fcfcf8;
+    text-transform: uppercase;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+}
+
+.tabla_tiendas_producto th,
+.tabla_tiendas_producto td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #dfe1e2;
+}
+
+.tabla_tiendas_producto tbody tr:hover {
+    background-color: #ebebeb;
+    transition: background-color 0.5s ease-in;
+}

@@ -1,0 +1,231 @@
+services:
+  db:
+    image: mysql:8.0.43-debian
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dbSS
+      MYSQL_USER: userSS
+      MYSQL_PASSWORD: pass
+    command: >
+      --server-id=1
+      --log-bin=mysql-bin
+      --gtid_mode=ON
+      --enforce-gtid-consistency=ON
+      --log_replica_updates=ON
+      --binlog_format=ROW
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_0900_ai_ci
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/ssteam/datos_db:/var/lib/mysql
+    networks:
+      - shocking-sales-network
+    #  - reddecontenedores
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  slave:
+    image: mysql:8.0.43-debian
+    container_name: slave
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      --server-id=2
+      --relay-log=mysql-relay-bin
+      --gtid_mode=ON
+      --enforce-gtid-consistency=ON
+      --log_replica_updates=ON
+      --read-only=ON
+      --log-bin=mysql-bin
+      --binlog-format=row
+      --binlog-expire-logs-seconds=604800
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_0900_ai_ci
+    ports:
+      - "3307:3306"
+    volumes:
+      - /home/ssteam/datos_slave:/var/lib/mysql
+    networks:
+      - shocking-sales-network
+    #  - reddecontenedores
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  db-init:
+    image: mysql:8.0.43-debian
+    container_name: db-init
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - shocking-sales-network
+    #  - reddecontenedores
+    volumes:
+      - ./infra/mysql_app_user.sql:/app_user.sql:ro
+    command: >
+      bash -lc "mysql -h db -uroot -proot < /app_user.sql"
+    restart: "no"
+
+  proxysql:
+    image: proxysql/proxysql:2.5.5
+    container_name: proxysql
+    ports:
+      - "6033:6033"
+      - "6032:6032"
+    volumes:
+      - /home/ssteam/proxysql:/var/lib/proxysql
+      - ./infra/proxysql_bootstrap.sql:/bootstrap.sql:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      slave:
+        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+    networks:
+      - shocking-sales-network
+    #  - reddecontenedores
+    restart: always
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysql -h 127.0.0.1 -P 6033 -u userSS -ppass -e 'SELECT 1' >/dev/null 2>&1",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    command: >
+      bash -lc "
+        rm -f /var/lib/proxysql/proxysql.db || true
+        proxysql -f --idle-threads &
+        for i in {1..60}; do
+          mysql -h 127.0.0.1 -P 6032 -u admin -padmin -e 'SELECT 1' >/dev/null 2>&1 && break
+          sleep 1
+        done
+        mysql -h 127.0.0.1 -P 6032 -u admin -padmin < /bootstrap.sql
+        sleep 5
+        wait -n
+      "
+
+  web:
+    build: .
+    container_name: web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./www:/var/www/html
+    depends_on:
+      proxysql:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    command: >
+      bash -lc "
+        set -e
+        cd /var/www/html &&
+        rm -f storage/framework/vite.hot || true &&
+        (npm ci || npm install) &&
+        npm run build &&
+        php artisan optimize:clear &&
+        apache2-foreground
+      "
+    networks:
+      - shocking-sales-network
+    #  - reddecontenedores
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8081:80"
+    networks:
+      - shocking-sales-network
+    #  - reddecontenedores
+
+    traefik:
+    image: "traefik"
+    restart: always
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+      - "--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}"
+      - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - traefik_data:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - "127.0.0.1:5678:5678"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.n8n.rule=Host(`${SUBDOMAIN}.${DOMAIN_NAME}`)
+      - traefik.http.routers.n8n.tls=true
+      - traefik.http.routers.n8n.entrypoints=web,websecure
+      - traefik.http.routers.n8n.tls.certresolver=mytlschallenge
+      - traefik.http.middlewares.n8n.headers.SSLRedirect=true
+      - traefik.http.middlewares.n8n.headers.STSSeconds=315360000
+      - traefik.http.middlewares.n8n.headers.browserXSSFilter=true
+      - traefik.http.middlewares.n8n.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.n8n.headers.forceSTSHeader=true
+      - traefik.http.middlewares.n8n.headers.SSLHost=${DOMAIN_NAME}
+      - traefik.http.middlewares.n8n.headers.STSIncludeSubdomains=true
+      - traefik.http.middlewares.n8n.headers.STSPreload=true
+      - traefik.http.routers.n8n.middlewares=n8n@docker
+    environment:
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - N8N_RUNNERS_ENABLED=true
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - TZ=${GENERIC_TIMEZONE}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./local-files:/files
+
+
+networks:
+  # reddecontenedores:
+  #   driver: bridge
+  shocking-sales-network:
+    external: true
+
+volumes:
+  datos_db:
+  datos_slave:
+  n8n_data:
+  traefik_data:

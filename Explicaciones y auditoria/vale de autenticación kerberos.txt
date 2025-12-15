@@ -1,0 +1,50 @@
+Palabras clave	Fecha y hora	Origen	Id. del evento	Categoría de la tarea
+Auditoría correcta	1/12/2025 21:55:08	Microsoft-Windows-Security-Auditing	4768	Kerberos Authentication Service	"Se solicitó un vale de autenticación Kerberos (TGT).
+
+Información de la cuenta:
+	Nombre de cuenta:		Administrador
+	Nombre de dominio kerberos proporcionado:	SSTEAM
+	Id. de usuario:			SSTEAM\Administrador
+	MSDS-SupportedEncryptionTypes:	0x27 (DES, RC4, AES-Sk)
+	 Claves disponibles:	AES-SHA1, RC4
+
+Información del servicio:
+	Nombre de servicio:		krbtgt
+	Id. de servicio:		SSTEAM\krbtgt
+	MSDS-SupportedEncryptionTypes:	0x1F (DES, RC4, AES128-SHA96, AES256-SHA96)
+	Claves disponibles:	AES-SHA1, RC4
+
+In información del controlador de dominio:
+	MSDS-SupportedEncryptionTypes:	0x1F (DES, RC4, AES128-SHA96, AES256-SHA96)
+	Claves Disponibles:	AES-SHA1, RC4
+
+Información de Red:
+	Dirección del Cliente:		::1
+	Puerto del Cliente:		0
+	Etipos Promocionados:	
+		AES256-CTS-HMAC-SHA1-96
+		AES128-CTS-HMAC-SHA1-96
+		RC4-HMAC-NT
+		RC4-HMAC-NT-EXP
+		RC4-HMAC-OLD-EXP
+		DES-CBC-MD5
+
+Información Adicional:
+	Opciones del Ticket:		0x40810010
+	Código de Resultado:		0x0
+	Tipo de cifrado del Ticket:	0x12
+	Tipo de cifrado de sesión:	0x12
+	Tipo de autenticación previa:	2
+	Tipo de cifrado de autenticación previa:	0x12
+
+Información de certificado:
+	Nombre del emisor de certificados:		
+	Nro. de serie de certificado:	
+	Huella digital del certificado:		
+
+Integración del vale
+	 Hash de vale de respuesta		AuztcwemgkW2T3mZL7lteWqO3BM+POOUgYOU+MVULO0=
+
+Solo se proporciona información de certificado si se usó un certificado para la autenticación previa.
+
+Los tipos de autenticación previa, las opciones de vale, los tipos de cifrado y los códigos de resultado se definen en RFC 4120."

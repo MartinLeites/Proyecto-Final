@@ -1,0 +1,60 @@
+Palabras clave	Fecha y hora	Origen	Id. del evento	Categoría de la tarea
+Auditoría correcta	1/12/2025 21:56:09	Microsoft-Windows-Security-Auditing	4624	Logon	"Se inició sesión correctamente en una cuenta.
+
+Firmante:
+	Id. de seguridad:		NULL SID
+	Nombre de cuenta:		-
+	Dominio de cuenta:		-
+	Id. de inicio de sesión:		0x0
+
+Información de inicio de sesión:
+	Tipo de inicio de sesión:		3
+	Modo de administrador restringido:	-
+	Cuenta virtual:		No
+	Token elevado:		Sí
+
+Nivel de suplantación:		Suplantación
+
+Nuevo inicio de sesión:
+	Id. de seguridad:		SYSTEM
+	Nombre de cuenta:		WIN-IIBR32PRHVQ$
+	Dominio de cuenta:		SSTEAM.FOREST
+	Id. de inicio de sesión:		0x937DB
+	Inicio de sesión vinculado:		0x0
+	Nombre de cuenta de red:	-
+	Dominio de cuenta de red:	-
+	GUID de inicio de sesión:		{c4ac3b0c-616d-3582-a495-873def0496d9}
+
+Información de proceso:
+	Id. de proceso:		0x0
+	Nombre de proceso:		-
+
+Información de red:
+	Nombre de estación de trabajo:	-
+	Dirección de red de origen:	10.10.10.18
+	Puerto de origen:		56804
+
+Información de autenticación detallada:
+	Proceso de inicio de sesión:		Kerberos
+	Paquete de autenticación:	Kerberos
+	Servicios transitados:	-
+	Nombre de paquete (solo NTLM):	-
+	Longitud de clave:		0
+
+Este evento se genera cuando se crea una sesión de inicio. Lo genera el equipo al que se tuvo acceso.
+
+Los campos de firmante indican la cuenta del sistema local que solicitó el inicio de sesión. Suele ser un servicio como el servicio de servidor o un proceso local como Winlogon.exe o Services.exe.
+
+El campo Tipo de inicio de sesión indica la clase de inicio de sesión que se realizó. Los tipos más comunes son 2 (interactivo) y 3 (red).
+
+Los campos Nuevo inicio de sesión indican la cuenta para la que se creó el nuevo inicio de sesión, es decir, aquella en la que se inició la sesión.
+
+Los campos de red indican dónde se originó una solicitud de inicio de sesión remota. Nombre de estación de trabajo no está siempre disponible y se puede dejar en blanco en algunos casos.
+
+El campo de nivel de suplantación indica en qué medida un proceso en la sesión de inicio de sesión puede suplantar.
+
+Los campos de información de autenticación proporcionan información detallada sobre esta solicitud de inicio de sesión específica.
+	- GUID de inicio de sesión es un identificador único que se puede usar para correlacionar este evento con un evento KDC.
+	- Servicios transitados indica los servicios intermedios que participaron en esta solicitud de inicio de sesión.
+	- Nombre de paquete indica el subprotocolo que se usó entre los protocolos NTLM.
+	- Longitud de clave indica la longitud de la clave de sesión generada. Será 0 si no se solicitó una clave de sesión."

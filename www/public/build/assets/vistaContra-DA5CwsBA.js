@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{const t=document.querySelector(".toggle-pass"),e=document.getElementById("password");!t||!e||t.addEventListener("click",()=>{e.type=e.type==="password"?"text":"password"})});

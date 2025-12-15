@@ -1,0 +1,12 @@
+Palabras clave	Fecha y hora	Origen	Id. del evento	Categoría de la tarea
+Auditoría correcta	1/12/2025 21:56:09	Microsoft-Windows-Security-Auditing	4634	Logoff	"Se cerró sesión en una cuenta.
+
+Sujeto:
+	Id. de seguridad:		SYSTEM
+	Nombre de cuenta:		WIN-IIBR32PRHVQ$
+	Dominio de cuenta:		SSTEAM
+	Id. de inicio de sesión:		0x934C0
+
+Tipo de inicio de sesión:			3
+
+Este evento se genera cuando se destruye una sesión de inicio. Puede estar correlacionado de manera positiva con un evento de inicio de sesión mediante el valor Id. de inicio de sesión. Los id. de inicio de sesión solo son únicos entre reinicios en el mismo equipo."

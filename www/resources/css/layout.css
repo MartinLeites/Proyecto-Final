@@ -1,0 +1,75 @@
+
+
+html,
+body {
+    height: 100%;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: #222;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    background: #ffffff;
+}
+
+/* ===== Header  ===== */
+header{
+  background: #557dff;                 
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.header-inner{
+  max-width: 1200px; width: 92%; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 0;
+}
+
+/* Marca */
+.brand{ 
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; color: #ffffff;          
+}
+
+/* Logo */
+.logo-img{
+  height: 40px;     
+  width: auto; 
+  display: block;
+}
+
+/* Responsivo del logo */
+@media (max-width: 680px){
+  .logo-img{ height: 32px; }
+}
+@media (min-width: 1200px){
+  .logo-img{ height: 48px; }
+}
+
+/* Estilos de navegación en el header */
+header nav ul{
+  list-style: none; display: flex; gap: 10px; margin: 0; padding: 0;
+}
+header nav a{
+  display: inline-block; padding: 8px 12px; border-radius: 10px;
+  text-decoration: none; font-weight: 600;
+  background: #0d4f85; color: #ffffff; 
+  border: 1px solid rgba(255,255,255,0.10);
+}
+header nav a:hover{
+  background: rgba(255,255,255,0.4); color: #0d4f85;
+}
+
+
+footer{
+    border-top: 1px solid #e5e7eb;
+    padding: 20px 0;
+    background: #f9fbff;
+    color: #334155;
+}
+main {
+    flex: 1 0 auto;
+}
